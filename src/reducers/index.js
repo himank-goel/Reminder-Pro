@@ -22,7 +22,6 @@ const changeStatus = (state = [], id) => {
         }
         return reminder;
     })
-    console.log(reminders);
     return reminders;
 }
 

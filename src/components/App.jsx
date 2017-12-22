@@ -13,7 +13,6 @@ class App extends Component {
     }
 
     addReminder() {
-        console.log(this);
         this.props.addReminder(this.state.text, this.state.dueDate);
     }
 
@@ -22,7 +21,6 @@ class App extends Component {
     }
 
     toggleReminder(id) {
-        console.log(id);
         this.props.toggleReminder(id)
     }
 
