@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addReminder, deleteReminder, clearReminder } from '../actions';
+import { addReminder, deleteReminder, clearReminder, toggleReminder } from '../actions';
 import moment from 'moment';
 
 class App extends Component {
@@ -21,6 +21,11 @@ class App extends Component {
         this.props.deleteReminder(id);
     }
 
+    toggleReminder(id) {
+        console.log(id);
+        this.props.toggleReminder(id)
+    }
+
     renderReminders() {
         const { reminders } = this.props;
         return(
@@ -29,10 +34,30 @@ class App extends Component {
                     reminders.map(reminder => {
                         return(
                             <li key = { reminder.id } className = "list-group-item">
-                                <div className = "list-item"> 
-                                    <div> { reminder.text } </div>
-                                    <div><em>{ moment(new Date(reminder.dueDate)).fromNow() }</em></div>
+                                <div 
+                                    className = "list-item chkbox"
+                                    onChange = {() => {
+                                        this.toggleReminder(reminder.id)
+                                    }}
+                                >
+                                    <input 
+                                        type = "checkbox"
+                                        defaultChecked = { reminder.completed }
+                                    />
                                 </div>
+                                {  
+                                    (reminder.completed === true) ?
+                                        <del> 
+                                            <div className = "list-item"> 
+                                                <div> <del> { reminder.text }</del> </div>
+                                                <div><em>{ moment(new Date(reminder.dueDate)).fromNow() }</em></div>
+                                            </div>
+                                        </del> :
+                                        <div className = "list-item"> 
+                                            <div> { reminder.text } </div>
+                                            <div><em>{ moment(new Date(reminder.dueDate)).fromNow() }</em></div>
+                                        </div>
+                                }
                                 <div
                                     onClick = { () => {
                                             this.deleteReminder(reminder.id)
@@ -102,4 +127,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { addReminder, deleteReminder, clearReminder })(App);
+export default connect(mapStateToProps, { addReminder, deleteReminder, clearReminder, toggleReminder })(App);

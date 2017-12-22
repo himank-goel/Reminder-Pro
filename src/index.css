@@ -27,3 +27,9 @@ input {
     padding-left: 5px;
     cursor: pointer;
 }
+
+.chkbox {
+    float: left;
+    padding-right: 10px;
+    cursor: pointer;
+}
